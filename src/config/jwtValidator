@@ -6,22 +6,15 @@ module.exports.validate = (req, res, next) => {
     token = req.headers["authorization"].split(" ")[1];
 
   if (!token) {
-    logger.log(
-      "error",
-      "No JWT token provided for req:" + req.method + ":" + req.url
-    );
     return res.status(403).send({ auth: false, message: "No token provided." });
   } else {
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
         if (err.name === "TokenExpiredError") {
-          logger.log("info", `Token Expired`);
           return res
             .status(500)
             .send({ auth: false, message: "Token Expired" });
         } else {
-          logger.log("error", `Verification Failed for JWT token:${token}`);
-          logger.log("error", "Req:" + req.method + ":" + req.url);
           return res
             .status(500)
             .send({ auth: false, message: "Token authentication failed." });
