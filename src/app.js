@@ -10,10 +10,12 @@ app.use(bodyParser.json()); // registering this middleware for accepting json re
 
 app.use("/api", indexrts); // All route must precees with this path
 
-databaseObj.createDbConnection().then(() => {
-  rabbitObj.connectRabbitMQ().then(() => {
-    app.listen(process.env.PORT, () => {
-      console.log(`Server is running at ${process.env.PORT}`);
+setTimeout(() => {
+  databaseObj.createDbConnection().then(() => {
+    rabbitObj.connectRabbitMQ().then(() => {
+      app.listen(process.env.PORT, () => {
+        console.log(`Server is running at ${process.env.PORT}`);
+      });
     });
   });
-});
+}, 10000); // wait for 10sec before starting to ensure everything is up as docker v3 does not support depends_on

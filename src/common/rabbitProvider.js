@@ -9,12 +9,10 @@ class Rabbit {
   async connectRabbitMQ() {
     try {
       console.log("here");
-      setTimeout(async () => {
-        this.conn = await amqplib.connect(process.env.RABBITMQ_URL);
-        if (this.conn) console.log("RabbitMq connection created");
-        this.channel = await this.conn.createChannel();
-        await this.channel.assertQueue(this.QUEUE);
-      }, 10000); // wait for 10sec before connecting to rabbit to ensure it is up as docker v3 does not support depends_on
+      this.conn = await amqplib.connect(process.env.RABBITMQ_URL);
+      if (this.conn) console.log("RabbitMq connection created");
+      this.channel = await this.conn.createChannel();
+      await this.channel.assertQueue(this.QUEUE);
     } catch (err) {
       console.log(err);
     }
