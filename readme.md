@@ -37,6 +37,8 @@ body: {
 "password": "1234abcd"
 }
 
+returns {token: JWT_TOKEN_WITH_USER_DATA_AS_PAYLOAD}
+
 ### add game data
 
 http://localhost:3001/api/gamedata/user - post
