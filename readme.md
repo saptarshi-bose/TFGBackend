@@ -9,7 +9,9 @@ Prerequisite: 1. docker-desktop installed on machine
 Commands:
 
 cd /TFGBackend
+
 npm i
+
 docker-compose up
 
 # API Routes
