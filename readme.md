@@ -13,6 +13,7 @@ docker-compose up
 ### Add User
 
 http://localhost:3001/api/user - Post
+
 body: {
 "username": "ImSiiva4",
 "email": "sap6@gmail.com",
@@ -22,6 +23,7 @@ body: {
 ### login
 
 http://localhost:3001/api/user/login - Post
+
 body: {
 "email": "sap6@gmail.com",
 "password": "1234abcd"
@@ -30,6 +32,7 @@ body: {
 ### add game data
 
 http://localhost:3001/api/gamedata/user - post
+
 body: {
 "userId": 1,
 "latestScore": 100
@@ -38,6 +41,7 @@ body: {
 ### edit game data
 
 http://localhost:3001/api/gamedata/user/:userId - Patch
+
 body: {
 "latestScore": 100
 }
