@@ -1,5 +1,22 @@
 version: "3.8"
 services:
+############### RabbitMq ####################
+        rabbitmq:
+            image: rabbitmq:3.11-management
+            container_name: rabbitmq
+            hostname: rabbitmq
+            ports:
+              - "5672:5672"
+              - "15672:15672"
+            environment:
+              - RABBITMQ_DEFAULT_USER=rabbituser
+              - RABBITMQ_DEFAULT_PASS=rabbitpass
+              - RABBITMQ_DEFAULT_VHOST=rabbitHost
+            volumes:
+              - ./rabbit/data:/var/lib/rabbitmq
+              - ./rabbit/log:/var/log/rabbitmq
+              - ./rabbit/etc:/etc/rabbitmq
+            restart: always
 ###########Backend-Server###############
         tfg-app:
             container_name: tfg-app
@@ -8,9 +25,13 @@ services:
             ports:
               - ${PORT}:${PORT}
             links:
+              - rabbitmq
               - mongo
+              - mysql
             depends_on:
+              - rabbitmq
               - mongo
+              - mysql
             volumes:
               - .:/usr/src/app
 ############Databases################## 

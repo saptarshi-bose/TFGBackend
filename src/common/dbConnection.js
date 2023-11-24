@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 
 class Database {
   constructor() {
-    this.knex = null;
     this.mongo = null;
   }
   //creates the db connection with knex and mysql2 for query
