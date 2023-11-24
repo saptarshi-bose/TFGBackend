@@ -43,6 +43,8 @@ returns {token: JWT_TOKEN_WITH_USER_DATA_AS_PAYLOAD}
 
 http://localhost:3001/api/gamedata/user - post
 
+add token in request header authorization - "BEARER {{TOKEN_RECEIVED_AFTER_USER_LOGIN}}"
+
 body: {
 "userId": 1,
 "latestScore": 100
@@ -52,14 +54,30 @@ body: {
 
 http://localhost:3001/api/gamedata/user/:userId - Patch
 
+
+add token in request header authorization - "BEARER {{TOKEN_RECEIVED_AFTER_USER_LOGIN}}"
+
+
 body: {
 "latestScore": 100
 }
+
 
 ### get user game data
 
 http://localhost:3001/api/gamedata/user/:userId - Get
 
+
+add token in request header authorization - "BEARER {{TOKEN_RECEIVED_AFTER_USER_LOGIN}}"
+
+
+
 ### delete user game data
 
 http://localhost:3001/api/gamedata/user/:userId - Delete
+
+
+add token in request header authorization - "BEARER {{TOKEN_RECEIVED_AFTER_USER_LOGIN}}"
+
+
+
