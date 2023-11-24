@@ -1,0 +1,36 @@
+version: "3.8"
+services:
+###########Backend-Server###############
+        tfg-app:
+            container_name: tfg-app
+            restart: always
+            build: .
+            ports:
+              - ${PORT}:${PORT}
+            links:
+              - mongo
+            depends_on:
+              - mongo
+            volumes:
+              - .:/usr/src/app
+############Databases################## 
+        mongo:
+              container_name: mongo
+              image: mongo
+              volumes:
+                - ./data:/data/db
+              ports:
+                - '27018:27017'
+        mysql:
+          image: mysql:8.0.32
+          container_name: mysql
+          volumes:
+            - ./init:/docker-entrypoint-initdb.d
+            - ./data/mysql:/var/lib/mysql
+          ports:
+            - "3306:3306"
+          restart: always
+          environment:
+            MYSQL_ROOT_PASSWORD: root@123
+            MYSQL_DATABASE: tfg
+            TZ: "Asia/Kolkata"
