@@ -25,23 +25,23 @@ module.exports.createUser = async (req, res) => {
         .status(400)
         .json({ message: "Password should be of length 8" });
     // checking unique email id is provided
-    // let checkEmail = await databaseobj.knexpool("user").select("id").where({
-    //   email: email,
-    // });
-    // if (checkEmail && checkEmail.length > 0)
-    //   return res
-    //     .status(400)
-    //     .json({ message: "EmailId is already registered." });
+    let checkEmail = await databaseobj.knexpool("user").select("id").where({
+      email: email,
+    });
+    if (checkEmail && checkEmail.length > 0)
+      return res
+        .status(400)
+        .json({ message: "EmailId is already registered." });
     //all validation done, now creating the user
     let salt = await bcrypt.genSalt(10);
     let hashedPassword = await bcrypt.hash(password, salt);
-    // await databaseobj.knexpool("user").insert([
-    //   {
-    //     email: req.body.email,
-    //     password: hashedPassword,
-    //     username: username,
-    //   },
-    // ]);
+    await databaseobj.knexpool("user").insert([
+      {
+        email: req.body.email,
+        password: hashedPassword,
+        username: username,
+      },
+    ]);
     const result = await rabbitObj.channel.sendToQueue(
       QUEUE,
       Buffer.from(
