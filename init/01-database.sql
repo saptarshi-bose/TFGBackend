@@ -25,9 +25,9 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `username` varchar(16) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `password` varchar(32) NOT NULL,
+  `password` mediumtext NOT NULL,
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `id` int NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-11-24 10:00:28
+-- Dump completed on 2023-11-24 11:40:15

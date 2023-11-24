@@ -8,24 +8,24 @@ class Database {
   }
   //creates the db connection with knex and mysql2 for query
   async createDbConnection() {
-    this.knexpool = require("knex")({
-      client: "mysql2",
-      connection: {
-        host: process.env.SQL_HOST,
-        user: process.env.SQL_USER,
-        password: process.env.SQL_PASSWORD,
-        port: process.env.SQL_PORT,
-        database: process.env.SQL_DATABASE,
-      },
-      pool: { min: 4, max: 10 },
-    });
-  }
-  async createMongoConnection() {
-    const options = {
-      useNewUrlParser: true,
-    };
-    const connection = await mongoose.connect(process.env.MONGO_URL, options);
-    if (connection) console.log("Mongo Connected Successfully...");
+    try {
+      this.knexpool = require("knex")({
+        client: "mysql2",
+        connection: {
+          host: process.env.SQL_HOST,
+          user: process.env.SQL_USER,
+          password: process.env.SQL_PASSWORD,
+          port: process.env.SQL_PORT,
+          database: process.env.SQL_DATABASE,
+        },
+        pool: { min: 4, max: 10 },
+      });
+      console.log("mysql connection created!");
+      this.mongo = await mongoose.connect(process.env.MONGO_URL);
+      if (this.mongo) console.log("Mongo Connected Successfully...");
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
 const databaseObj = new Database();

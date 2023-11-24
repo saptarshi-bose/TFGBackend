@@ -21,7 +21,7 @@ module.exports.createUser = async (req, res) => {
         .status(400)
         .json({ message: "Password should be of length 8" });
     // checking unique email id is provided
-    let checkEmail = await databaseobj.knexpool("users").select("id").where({
+    let checkEmail = await databaseobj.knexpool("user").select("id").where({
       email: email,
     });
     if (checkEmail && checkEmail.length > 0)
@@ -31,13 +31,14 @@ module.exports.createUser = async (req, res) => {
     //all validation done, now creating the user
     let salt = await bcrypt.genSalt(10);
     let hashedPassword = await bcrypt.hash(password, salt);
-    await databaseobj.knexpool("users").insert([
+    await databaseobj.knexpool("user").insert([
       {
         email: req.body.email,
         password: hashedPassword,
         username: username,
       },
     ]);
+    return res.status(200).json({ message: "User Created Sucessfully!" });
   } catch (err) {
     console.log(err);
     return res
@@ -50,7 +51,7 @@ module.exports.login = async (req, res) => {
   try {
     const email = req.body.email;
     const password = req.body.password;
-    let userExist = await dbObj.knexpool("users").where("email", email);
+    let userExist = await databaseobj.knexpool("user").where("email", email);
     //If email is not in db
     if (userExist.length == 0)
       return res.status(400).json({ message: "Email is not registered!" });
