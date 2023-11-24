@@ -10,7 +10,9 @@ Commands:
 
 cd /TFGBackend
 
+
 npm i
+
 
 docker-compose up
 
